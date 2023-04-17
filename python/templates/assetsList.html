@@ -1,0 +1,44 @@
+<h1>Asset List</h1>
+<form action="/assets/add" method="POST">
+    <label for="brand">Brand:</label>
+    <input type="text" id="brand" name="brand" required>
+
+    <label for="model">Model:</label>
+    <input type="text" id="model" name="model" required>
+
+    <label for="type">Type:</label>
+    <select id="type" name="type">
+        <option value="laptop">Laptop</option>
+        <option value="keyboard">Keyboard</option>
+        <option value="mouse">Mouse</option>
+        <option value="headset">Headset</option>
+        <option value="monitor">Monitor</option>
+    </select>
+
+    <button type="submit">Submit</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>BRAND</th>
+            <th>MODEL</th>
+            <th>TYPE</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for asset in assets %}
+        <tr>
+            <td>{{ asset.id }}</td>
+            <td>{{ asset.brand }}</td>
+            <td>{{ asset.model }}</td>
+            <td>{{ asset.type.value }}</td>
+            <td>
+                <a href="{{ url_for('assets.delete', id=asset.id) }}">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

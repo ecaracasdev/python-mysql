@@ -1,0 +1,27 @@
+<h1>License List</h1>
+<form action="/licenses/add" method="POST">
+    <label for="software">Software:</label>
+    <input type="text" id="software" name="software" required>
+    <button type="submit">Submit</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Software</th>
+            <th>Delete</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for license in licenses %}
+        <tr>
+            <td>{{ license.id }}</td>
+            <td>{{ license.software }}</td>
+            <td>
+                <a href="{{ url_for('licenses.delete', id=license.id) }}">x</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

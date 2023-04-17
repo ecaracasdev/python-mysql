@@ -1,0 +1,70 @@
+<h1>Developer List</h1>
+<form action="/developers/add" method="POST">
+    <label for="fullname">Full name:</label>
+    <input type="text" id="fullname" name="fullname" required>
+
+    <label for="active">Active:</label>
+    <input type="checkbox" id="active" name="active" value="true" checked>
+
+    <br><br>
+
+    <label for="assets">Assets:</label>
+    <select id="assets" name="asset_ids" multiple>
+        {% for asset in assets %}
+        <option value="{{ asset.id }}">{{ asset.brand }}</option>
+        {% endfor %}
+    </select>
+
+    <label for="licenses">Licenses:</label>
+    <select id="licenses" name="license_ids" multiple>
+        {% for license in licenses %}
+        <option value="{{ license.id }}">{{ license.software }}</option>
+        {% endfor %}
+    </select>
+
+    <br><br>
+    <button type="submit">Submit</button>
+</form>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Full name</th>
+            <th>Active</th>
+            <th>Assets</th>
+            <th>Licenses</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for developer in developers %}
+        <tr>
+            <td>{{ developer.id }}</td>
+            <td>{{ developer.fullname }}</td>
+            <td>{{ 'Yes' if developer.active else 'No' }}</td>
+            <td>
+                {% if developer.assets %}
+                <ul>
+                    {% for asset in developer.assets %}
+                    <li>{{ asset.brand }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+            <td>
+                {% if developer.licenses %}
+                <ul>
+                    {% for license in developer.licenses %}
+                    <li>{{ license.software }}</li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                -
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

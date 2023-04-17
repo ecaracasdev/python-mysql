@@ -1,0 +1,17 @@
+# Python:
+*.pyc
+__pycache__/
+venv/
+pip-lock.txt
+
+# Flask:
+instance/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+__pycache__/
+.idea/
+.vscode/
+.DS_Store
+env/
