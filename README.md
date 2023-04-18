@@ -10,7 +10,7 @@ To run the project locally, you need to have Docker and Docker Compose installed
 
 1.  Clone the repository from Github:
 ```
-git clone https://github.com/<username>/<project-name>.git
+git clone https://github.com/ecaracasdev/python-mysql.git
 ```
 
 2.  Navigate to the project directory:

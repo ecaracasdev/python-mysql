@@ -5,6 +5,7 @@ import json
 
 developersRouter = Blueprint('developers', __name__, url_prefix='/developers')
 
+
 @developersRouter.route('/add', methods=['POST'])
 @login_required
 def add():
@@ -72,29 +73,66 @@ def get(id):
             'fullname': developer.fullname,
             'active': developer.active
         }
-        assets = developer.assets
-        if assets:
-            asset_list = []
-            for asset in assets:
-                asset_dict = {
-                    'id': asset.id,
-                    'brand': asset.brand,
-                    'model': asset.model,
-                    'type': asset.type
-                    # add other attributes as needed
-                }
-                asset_list.append(asset_dict)
-            developer_dict['assets'] = asset_list
-        licenses = developer.licenses
-        if licenses:
-            license_list = []
-            for license in licenses:
-                license_dict = {
-                    'id': license.id,
-                    'software': license.software,
-                }
-                license_list.append(license_dict)
-            developer_dict['licenses'] = license_list
+
+        # check if 'property' query param is present and has a valid value
+        property_value = request.args.get('property')
+        if property_value == 'asset':
+            assets = developer.assets
+            if assets:
+                asset_list = []
+                for asset in assets:
+                    asset_dict = {
+                        'id': asset.id,
+                        'brand': asset.brand,
+                        'model': asset.model,
+                        'type': asset.type
+                        # add other attributes as needed
+                    }
+                    asset_list.append(asset_dict)
+                developer_dict['assets'] = asset_list
+            else:
+                developer_dict['assets'] = []
+
+        elif property_value == 'license':
+            licenses = developer.licenses
+            if licenses:
+                license_list = []
+                for license in licenses:
+                    license_dict = {
+                        'id': license.id,
+                        'software': license.software,
+                    }
+                    license_list.append(license_dict)
+                developer_dict['licenses'] = license_list
+            else:
+                developer_dict['licenses'] = []
+
+        # if 'property' query param is empty or invalid, return all details
+        else:
+            assets = developer.assets
+            if assets:
+                asset_list = []
+                for asset in assets:
+                    asset_dict = {
+                        'id': asset.id,
+                        'brand': asset.brand,
+                        'model': asset.model,
+                        'type': asset.type
+                        # add other attributes as needed
+                    }
+                    asset_list.append(asset_dict)
+                developer_dict['assets'] = asset_list
+            licenses = developer.licenses
+            if licenses:
+                license_list = []
+                for license in licenses:
+                    license_dict = {
+                        'id': license.id,
+                        'software': license.software,
+                    }
+                    license_list.append(license_dict)
+                developer_dict['licenses'] = license_list
+
         return jsonify(developer_dict)
     else:
         return jsonify({'message': 'Developer not found'})
